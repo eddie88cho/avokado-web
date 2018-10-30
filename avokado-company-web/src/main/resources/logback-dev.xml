@@ -6,7 +6,7 @@
 	<!-- Console -->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%.-1level|%-40.40logger|%5L|%d{HH:mm:ss}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
+			<pattern>%.-1level|%logger|%5L|%d{yyMMdd HH:mm:ss.S}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
 		</encoder>
 	</appender>
 	
@@ -17,7 +17,7 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<pattern>%.-1level|%-40.40logger|%5L|%d{HH:mm:ss}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
+			<pattern>%.-1level|%-40.40logger|%5L|%d{HH:mm:ss.S}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
 		</encoder>
 	</appender>
 	
@@ -42,15 +42,14 @@
 	
 	<!-- Medialog : Spring Environment loggers [S] -->
 <!-- 	<logger name="org.springframework.boot"    level="WARN"/> -->
-<!-- 	<logger name="org.springframework.core"    level="WARN"/> -->
-<!-- 	<logger name="org.springframework.beans"   level="WARN"/> -->
-<!-- 	<logger name="org.springframework.context" level="WARN"/> -->
+	<logger name="org.springframework"    level="INFO"/>
+	<logger name="org.springframework.web.servlet"    level="WARN"/>
+	<logger name="org.hibernate"          level="WARN"/>
 <!-- 	<logger name="org.springframework.aop"     level="ERROR"/> -->
 	
 <!-- 	<logger name="org.springframework.jdbc"        level="INFO"/> -->
 <!-- 	<logger name="org.mybatis"         level="INFO"/> -->
 	
-<!-- 	<logger name="org.springframework.web"           level="ERROR"/> -->
 <!-- 	<logger name="org.springframework.security"      level="WARN"/> -->
 	<!-- Medialog : Spring Environment loggers [F] -->
 

@@ -1,6 +1,6 @@
 ###################################################################################################
 #
-# Avokado Company Profile Web Application properties
+# Avokado Company Web Application properties
 # @최초 생성일 : 2018-10-30 - 조현권
 #
 ###################################################################################################
@@ -18,7 +18,7 @@ spring:
     # enabled : false -> html 변경여부 동적 적용, true -> 최초 배포시 html 유지
     cache: false
     prefix: classpath:/templates
-    mode: LEGACYHTML5
+    mode: HTML
     
 server:
   port: 8080
