@@ -1,0 +1,64 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'war'
+
+group = 'kr.co.avokado'
+version = '0.0.1-ONDEV'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+/* Lombok Plugin 사용시 주석 해제 (로컬 플러그인 설치 후 사용) - https://projectlombok.org/setup/eclipse */
+//plugins {
+//	id 'net.ltgt.apt' version '0.10'
+//}
+
+configurations {
+	providedRuntime
+}
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	implementation('org.springframework.boot:spring-boot-starter-mail')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	runtimeOnly('org.springframework.boot:spring-boot-devtools')
+
+	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+	
+	/* Thymeleaf [S] */
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	// HTML tag 밸런서 - https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml
+	compile group: 'net.sourceforge.nekohtml', name: 'nekohtml', version: '1.9.22'
+	// 향상된 Layout dialect - https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
+	compile group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '2.3.0'
+	// IE 조건 주석, noscript 태그 대응 - https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-conditionalcomments
+	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-conditionalcomments', version: '2.1.2.RELEASE'
+	
+	/* Thymeleaf [F] */
+	
+	/* LOMBOK [S]*/
+	compileOnly('org.projectlombok:lombok:1.18.4')
+	/* Lombok Plugin 사용시 주석 해제 (로컬 플러그인 설치 후 사용) - https://projectlombok.org/setup/eclipse */
+	// apt 'org.projectlombok:lombok:1.18.4'
+	/* LOMBOK [F]*/
+}

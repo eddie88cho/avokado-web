@@ -1,0 +1,57 @@
+###################################################################################################
+#
+# Avokado Company Profile Web Application properties
+# @최초 생성일 : 2018-10-30 - 조현권
+#
+###################################################################################################
+spring:
+  profiles:
+    active:
+    # default(개발자 로컬), dev(개발), prod(운영)
+    - default
+
+  application:
+    name: avokado-company-web
+
+  # Avokado : thymeleaf resolver configuration
+  thymeleaf:
+    # enabled : false -> html 변경여부 동적 적용, true -> 최초 배포시 html 유지
+    cache: false
+    prefix: classpath:/templates
+    mode: LEGACYHTML5
+    
+server:
+  port: 8080
+
+---
+#########################################################################
+#       Avokado default profile
+#########################################################################
+
+logging:
+  config: classpath:logback-dev.xml
+
+---
+#########################################################################
+#       Avokado development profile
+#########################################################################
+spring:
+  profiles: dev
+  
+logging:
+  config: classpath:logback-dev.xml
+
+---
+#########################################################################
+#       Avokado production profile
+#########################################################################
+spring:
+  profiles: prod
+  
+logging:
+  config: classpath:logback-prod.xml
+  
+  
+  
+  
+  

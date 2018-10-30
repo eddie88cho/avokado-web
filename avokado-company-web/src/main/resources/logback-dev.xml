@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="logfile_path" value="/var/log/avkd"/>
+	<property name="logfile_name" value="avkd-com-web"/>
+	
+	<!-- Console -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%.-1level|%-40.40logger|%5L|%d{HH:mm:ss}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="DEFAULT_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logfile_path}/${logfile_name}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${logfile_path}/${logfile_name}.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%.-1level|%-40.40logger|%5L|%d{HH:mm:ss}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- File (Error Logs) -->
+	<appender name="ERROR-LOG-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${logfile_path}/${logfile_name}-err.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${logfile_path}/err/${logfile_name}-err-%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<!-- or whenever the file size reaches 100MB -->
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%.-1level|%logger|%5L|%d{yyMMdd HH:mm:ss.SSS}|%msg%n%ex{full, EX_DISPLAY_EVAL}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- Medialog : Spring Environment loggers [S] -->
+<!-- 	<logger name="org.springframework.boot"    level="WARN"/> -->
+<!-- 	<logger name="org.springframework.core"    level="WARN"/> -->
+<!-- 	<logger name="org.springframework.beans"   level="WARN"/> -->
+<!-- 	<logger name="org.springframework.context" level="WARN"/> -->
+<!-- 	<logger name="org.springframework.aop"     level="ERROR"/> -->
+	
+<!-- 	<logger name="org.springframework.jdbc"        level="INFO"/> -->
+<!-- 	<logger name="org.mybatis"         level="INFO"/> -->
+	
+<!-- 	<logger name="org.springframework.web"           level="ERROR"/> -->
+<!-- 	<logger name="org.springframework.security"      level="WARN"/> -->
+	<!-- Medialog : Spring Environment loggers [F] -->
+
+	<root level="DEBUG">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="DEFAULT_LOG_APPENDER"/>
+		<appender-ref ref="ERROR-LOG-APPENDER"/>
+	</root>
+</configuration>
