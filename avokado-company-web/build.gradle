@@ -34,16 +34,22 @@ configurations {
 }
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-jdbc')
-	implementation('org.springframework.boot:spring-boot-starter-mail')
-	implementation('org.springframework.boot:spring-boot-starter-security')
+	
 	implementation('org.springframework.boot:spring-boot-starter-web')
-	implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
 	runtimeOnly('org.springframework.boot:spring-boot-devtools')
 
 	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
-	testImplementation('org.springframework.security:spring-security-test')
+	
+	/* Spring Security [S] : Spring Security 필요시 주석 풀 것 */
+	// implementation('org.springframework.boot:spring-boot-starter-security')
+	// testImplementation('org.springframework.security:spring-security-test')
+	/* Spring Security [F] */
+	
+	/* Database [S] : Database 생성 후 주석 풀 것 */
+	// implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	// implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	/* Database [F]*/
 	
 	/* Thymeleaf [S] */
 	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
@@ -61,4 +67,8 @@ dependencies {
 	/* Lombok Plugin 사용시 주석 해제 (로컬 플러그인 설치 후 사용) - https://projectlombok.org/setup/eclipse */
 	// apt 'org.projectlombok:lombok:1.18.4'
 	/* LOMBOK [F]*/
+	
+	/* Mail Service [S] : 메일 서비스 사용시 주석 풀 것 */
+	// implementation('org.springframework.boot:spring-boot-starter-mail')
+	/* Mail Service [F]*/
 }
