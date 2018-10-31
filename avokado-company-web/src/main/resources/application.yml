@@ -18,7 +18,7 @@ spring:
     # enabled : false -> html 변경여부 동적 적용, true -> 최초 배포시 html 유지
     cache: false
     prefix: classpath:/templates
-    mode: HTML
+    mode: HTML5
     
 server:
   port: 8080

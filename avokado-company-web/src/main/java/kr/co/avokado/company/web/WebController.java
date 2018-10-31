@@ -8,13 +8,15 @@ package kr.co.avokado.company.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import kr.co.avokado.company.web.component.AvkdControllerComponent;
+
 /**
  * <p>웹 화면 컨트롤러</p>
  * @author Cho Hyun Kwon
  * @since
  */
 @Controller
-public class WebController {
+public class WebController extends AvkdControllerComponent {
 
 	@GetMapping("/")
 	public String indexPage() {

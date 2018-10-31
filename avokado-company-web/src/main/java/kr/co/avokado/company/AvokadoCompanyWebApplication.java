@@ -19,7 +19,7 @@ public class AvokadoCompanyWebApplication {
 	
 	@EventListener(ApplicationStartedEvent.class)
 	public void onStartUpMessage() {
-		String cyan = "\u001B[36m", blue = "\u001B[34m", red="\u001B[31m", reset  = "\u001B[0m";
+		String cyan = "\u001B[36m", red="\u001B[31m", reset  = "\u001B[0m";
 		String greenBg = "\u001B[42m";
 		System.out.println(cyan+"--------------------------------------------------------------");
 		System.out.println("      ___   _   _  _____  _   __  ___  ______  _____ ");

@@ -1,6 +1,6 @@
 /*
  * Avokado Company Web Application
- * : ¾Æº¸Ä«µµ È¸»ç È¨ÆäÀÌÁö ÇÁ·ÎÁ§Æ®
+ * : ï¿½Æºï¿½Ä«ï¿½ï¿½ È¸ï¿½ï¿½ È¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
  * 2018-10
  */
 package kr.co.avokado.utils;
@@ -13,6 +13,6 @@ import lombok.experimental.UtilityClass;
  *
  */
 @UtilityClass
-public class StringUtils {
+public abstract class StringUtils {
 
 }

@@ -5,7 +5,11 @@
  */
 package kr.co.avokado.company.web.component;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
  * <p>Avokado Web, Api 컨트롤러 최상위 클래스</p>
@@ -15,4 +19,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AvkdControllerComponent {
 
+	@ModelAttribute
+	public void currentDateTimesOnPage(Model model) {
+		model.addAttribute("localDateTime", LocalDateTime.now());
+	}
 }
