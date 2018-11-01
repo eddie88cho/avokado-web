@@ -1,9 +1,12 @@
-/**
+/************************************************************************************
  * Avokado javascript utilities
+ *  - 아보카도 자바스크립트 유틸리티
+ *  - IE11 이하에서는 동작여부 보장 못함 ( 자주 사용하는 function은 polyfill 처리 )
+ * 
  * @author Cho Hyun Kwon
  * @version 1.0.0
  * @update 20181031 - 1.0.0
- */
+ ************************************************************************************/
 
 /**
  * Avokado 유틸리티
@@ -65,33 +68,56 @@
 		 * @param name - 성명
 		 * @param type - 검사 타입( optional )
 		 *          ㄴ (default) : 특수문자, 숫자, 공백을 포함하지 않은 문자
-		 *          ㄴ kr        : 특수문자, 숫자, 공백을 포함하지 않은 한글
-		 *          ㄴ en        : 특수문자, 숫자, 공백을 포함하지 않은 영문( full name 검사하지 말 것 )
+		 *          ㄴ kr        : 오직 한글로만 구성된 이름
+		 *          ㄴ en        : 영문이름 (ex : "Dennis O'reilly", "Francis Scott Key", "Mary-Jane")
 		 */
 		_utils.isValid.name = function( name, type ) {
 			if( isBlank(name) ) return false;
-			var _t = type || '', valid = false;
-			
-			// TODO 특수문자, 숫자, 공백 포함여부
-			
-			if( _t === 'kr' ) {
-				// TODO 문자열이 한글인지 정규식 체크
+			// 한글 이름
+			if( type === 'kr' ) {
+				if( name.length === 1 ) return false;
+				var regexKorean = /^[가-힣]+$/;
+				return regexKorean.test(name);
 			}
-			else if( _t === 'en' ) {
-				// TODO 문자열이 영문인지 정규식 체크
+			// 영문 이름
+			else if( type === 'en' ) {
+				var regexEnglishName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g;
+				return regexEnglishName.test(name);
+			} 
+			// default
+			else {
+				return ( !hasWhiteSpace(name) && !hasNumber(name) && !hasSpecialChar(name) );
 			}
-			return valid;
+			/***/
+			function hasWhiteSpace( str ) { return str.indexOf(' ') >= 0; };
+			function hasNumber( str ) { return /\d/.test(str); };
+			function hasSpecialChar( str ) { return /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(str); };
+		};
+		/**
+		 * 이메일 유효성 검사
+		 * @param email - 이메일 주소
+		 */
+		_utils.isValid.email = function( email ) {
+			var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			return re.test(String(email).toLowerCase());
 		};
 		/**
 		 * 핸드폰 번호 유효성 검사
+		 * - 국내 핸드폰 번호만 검사
+		 * - 국가 코드 82가 아닐 경우 return false;
 		 * @param phoneNo - 핸드폰 번호
 		 */
 		_utils.isValid.phoneNo = function( phoneNo ) {
 			if( isBlank(phoneNo) ) return false;
-			var valid = false;
-			// TODO hyphen 제거
-			// TODO 정규식 체크
-			return valid;
+			phoneNo = phoneNo.trim();
+			if( phoneNo.startsWith('+') ) {
+				if( phoneNo.startsWith("+82") ) {
+					phoneNo = '0'+phoneNo.substring(3);
+				} else return false;
+			}
+			phoneNo = phoneNo.split("-").join('');
+			var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+			return regPhone.test(phoneNo);
 		};
 		/**
 		 * 유선 번호 유효성 검사
@@ -123,6 +149,7 @@
 			
 			var _p = pattern>>0, masked = '';
 			switch( _p ) {
+			// 이*, 조**, 제갈**, 황금***, Ed****
 			case 1 :
 				var headStr;
 				if( name.length === 3 ) {
@@ -131,8 +158,9 @@
 				else {
 					headStr = name.substring(0,2);
 				}
-				masked = headStr + '*'.repeat( name.length - headStr.length );
+				masked = headStr.padEnd(name.length, '*');
 				break;
+			// 이*, 조*권, 제갈*명, 황금**리, Ed***n
 			case 0: default:
 				var headStr,tailStr;
 				if( name.length === 3 ) {
@@ -156,8 +184,27 @@
 		 */
 		_utils.mask.id = function( userId, pattern ) {
 			if( isBlank(userId) ) throw "매개변수 'userId'이 존재하지 않습니다.";
-			var _p = pattern || 0, masked = '';
-			// TODO 아이디 마스킹
+			var _p = pattern>>0, masked = '';
+			userId = userId.trim();
+			
+			if( userId.length === 1 ) return userId;
+			else if( userId.length === 2 ) return userId[0]+'*';
+			
+			var headStr;
+			switch( _p ) {
+			case 2:
+				headStr = userId.substring(0,2);
+				masked = headStr.padEnd(userId.length, '*');
+				break;
+			case 1:
+				headStr = userId[0];
+				var tailStr = userId[userId.length-1];
+				masked = headStr+'*'.repeat(userId.length-2)+tailStr;
+				break;
+			case 0: default:
+				masked = userId[0].padEnd(userId.length, '*');
+			}
+			
 			return masked;
 		}
 		/**
@@ -175,7 +222,7 @@
 		_utils.mask.phoneNo = function( phoneNo, pattern, useHyphen ) {
 			if( isBlank(phoneNo) ) throw "매개변수 'phoneNo'가 존재하지 않습니다.";
 			if( !_utils.isValid.phoneNo(phoneNo) ) throw '올바른 핸드폰 번호가 아닙니다.';
-			var _p = pattern || 0, _uh = useHyphen || true, masked = '';
+			var _p = pattern >> 0, _uh = useHyphen || true, masked = '';
 			// TODO 핸드폰 번호 마스킹 
 			return masked;
 		};
@@ -214,6 +261,12 @@
 	};
 	
 	function polyfill() {
+		// startsWith
+		if( !String.prototype.startsWith ) {
+			String.prototype.startsWith = function(search, pos) {
+				return this.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
+			}
+		}
 		// repeat
 		if( !String.prototype.repeat ) {
 			String.prototype.repeat = function( count ) {
