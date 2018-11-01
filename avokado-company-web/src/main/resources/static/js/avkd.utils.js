@@ -69,7 +69,7 @@
 		 * @param type - 검사 타입( optional )
 		 *          ㄴ (default) : 특수문자, 숫자, 공백을 포함하지 않은 문자
 		 *          ㄴ kr        : 오직 한글로만 구성된 이름
-		 *          ㄴ en        : 영문이름 (ex : "Dennis O'reilly", "Francis Scott Key", "Mary-Jane")
+		 *          ㄴ en        : 영문이름 (ex : "Dennis O'reilly", "Martin Luther King, Jr.", "Francis Scott Key", "Mary-Jane")
 		 */
 		_utils.isValid.name = function( name, type ) {
 			if( isBlank(name) ) return false;
@@ -210,21 +210,46 @@
 		/**
 		 * 핸드폰 번호 마스킹
 		 * @param phoneNo - 핸드폰 번호
+		 * @param useHyphen( optional ) - 결과값 하이픈(-) 삽입 여부
+		 *         ㄴ true : (default) 010-83**-32**
+		 *         ㄴ false : 01083**32**
 		 * @param pattern( optional ) - 마스킹 패턴
 		 *         ㄴ 0 : (default) 010-92**-96**
 		 *         ㄴ 1 : 019-83**-**32
 		 *         ㄴ 2 : 01*-82**-52**
 		 *         ㄴ 3 : 01*-76**-**90
-		 * @param useHyphen( optional ) - 결과값 하이픈(-) 삽입 여부
-		 *         ㄴ true : (default) 010-83**-32**
-		 *         ㄴ false : 01083**32**
 		 */
-		_utils.mask.phoneNo = function( phoneNo, pattern, useHyphen ) {
+		_utils.mask.phoneNo = function( phoneNo, useHyphen, pattern ) {
 			if( isBlank(phoneNo) ) throw "매개변수 'phoneNo'가 존재하지 않습니다.";
 			if( !_utils.isValid.phoneNo(phoneNo) ) throw '올바른 핸드폰 번호가 아닙니다.';
-			var _p = pattern >> 0, _uh = useHyphen || true, masked = '';
-			// TODO 핸드폰 번호 마스킹 
-			return masked;
+			var _p = pattern>>0, _uh = typeof useHyphen !== 'boolean'?true:useHyphen;
+			phoneNo = phoneNo.split("-").join('');
+			var tempPhone = phoneNo.replace(/(^01[0|1|6|7|8|9]{1})([0-9]{3,4})([0-9]{4})/,'$1-$2-$3');
+			var pArr = tempPhone.split('-'),p1=pArr[0]+'',p2=pArr[1]+'',p3=pArr[2]+'';
+			
+			// 핸드폰 번호 마스킹 
+			switch( _p ) {
+			case 3 : // 01*-76**-**90
+				pArr[0] = '01*';
+				pArr[1] = p2.substring(0,p2.length-2).padEnd(p2.length,'*');
+				pArr[2] = p3.substring(2,4).padStart(4,'*');
+				break;
+			case 2 : // 01*-82**-52**
+				pArr[0] = '01*';
+				pArr[1] = p2.substring(0,p2.length-2).padEnd(p2.length,'*');
+				pArr[2] = p3.substring(0,2).padEnd(4,'*');
+				break;
+			case 1 : // 019-83**-**32
+				pArr[0] = p1;
+				pArr[1] = p2.substring(0,p2.length-2).padEnd(p2.length,'*');
+				pArr[2] = p3.substring(2,4).padStart(4,'*');
+				break;
+			case 0 : default : // 010-92**-96**
+				pArr[0] = p1;
+				pArr[1] = p2.substring(0,p2.length-2).padEnd(p2.length,'*');
+				pArr[2] = p3.substring(0,2).padEnd(4,'*');
+			}
+			return pArr.join(_uh?'-':'');
 		};
 		/**
 		 * 주민(외국인)등록 번호 마스킹
