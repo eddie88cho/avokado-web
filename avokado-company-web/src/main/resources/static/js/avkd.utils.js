@@ -125,8 +125,16 @@
 		/**
 		 * 연,월,일 유효성 검사
 		 */
-		_utils.isValid.date = function(year, month, day) {
-			// TODO 연월일 검사
+		_utils.isValid.date = function( year, month, day ){
+			if( !/^\d{4}$/.test(year) ) return false;
+			month = (''+month).padStart(2, '0');
+			if( !/^\d{2}$/.test(month) ) return false;
+			day = (''+day).padStart(2, '0');
+			if( !/^\d{2}$/.test(day) ) return false;
+			var dateStr = year+'-'+month+'-'+day;
+			var d = new Date(dateStr);
+			if(Number.isNaN(d.getTime())) return false;
+			return d.toISOString().slice(0,10) === dateStr;
 		}
 		
 		// 3. 문자열 마스킹
