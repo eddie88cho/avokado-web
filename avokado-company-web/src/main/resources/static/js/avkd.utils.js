@@ -45,12 +45,8 @@
 		 * @param rrn - 주민등록번호
 		 */
 		_utils.isValid.rrn = function( rrn ) {
-			if( isBlank(frn) ) return false;
-			var valid = false;
-			// TODO 하이픈 제거
-			// TODO 주민등록번호 검증식
-			
-			return valid;
+			if( isBlank(rrn) ) return false;
+			return validRegistrationNumber(rrn,'rrn');
 		};
 		/**
 		 * 외국인 등록번호 유효성 검사
@@ -58,10 +54,7 @@
 		 */
 		_utils.isValid.frn = function( frn ) {
 			if( isBlank(frn) ) return false;
-			var valid = false;
-			// TODO 외국인등록번호 검증식
-			
-			return valid;
+			return validRegistrationNumber(frn,'frn');
 		};
 		/**
 		 * 올바른 성명 여부 검사
@@ -129,6 +122,12 @@
 			// TODO hyphen 제거
 			// TODO 정규식 체크
 			return valid;
+		}
+		/**
+		 * 연,월,일 유효성 검사
+		 */
+		_utils.isValid.date = function(year, month, day) {
+			// TODO 연월일 검사
 		}
 		
 		// 3. 문자열 마스킹
@@ -261,14 +260,23 @@
 		 *         ㄴ true : (default) 880823-1******
 		 *         ㄴ false : 8808231******
 		 */
-		_utils.mask.rn = function( rn, pattern, useHyphen ) {
+		_utils.mask.rn = function( rn, useHyphen, pattern ) {
 			if( isBlank(rn) ) throw "매개변수 'rn'이 존재하지 않습니다.";
-			if( !_utils.isValid.rrn(rn) && !_utils.isValid.frn(rn) ) throw '올바른 주민(외국인)등록번호가 아닙니다.';
-			var _p = pattern || 0, _uh = useHyphen || true, masked = '';
+			if( !validRegistrationNumber(rn) ) throw '올바른 주민(외국인)등록번호가 아닙니다.';
+			var _p = pattern>>0, _uh=(typeof useHyphen != 'boolean')?true:useHyphen, rn = rn.split("-").join('');
+			var rnArr = [];
 			// TODO 주민(외국인)등록번호 마스킹 
-			return masked;
+			rnArr[0] = rn.substr(0,6);
+			switch( _p ) {
+			case 1:
+				rnArr[1] = '*'.repeat(7);
+				break;
+			case 0: default:
+				rnArr[1] = rn.substr(6,1).padEnd(6,'*');
+			}
+			
+			return rnArr.join(_uh?'-':'');
 		};
-		
 		
 		return _utils;
 	}
@@ -283,6 +291,34 @@
 	// blank check
 	function isBlank( str ) {
 		return (!str || str.trim().length === 0);
+	};
+	
+	// Check registration number 
+	function validRegistrationNumber( rn, type ) {
+		rn = rn.split("-").join('');
+		if( rn.length !== 13 ) return false;
+		
+		var genderCd = rn.substr(6,1)>>0, rrnGenderSet=[1,2,3,4], frnGenderSet=[5,6,7,8];
+		if( type === 'rrn' && (rrnGenderSet.indexOf(genderCd) < 0) ) {
+			return false;
+		}
+		else if( type == 'frn' && (frnGenderSet.indexOf(genderCd) < 0) ) {
+			return false;
+		}
+		else {
+			if( (rrnGenderSet.indexOf(genderCd) < 0) && (frnGenderSet.indexOf(genderCd) < 0) ) return false;
+		}
+		var checkSum = 0;
+		for(var i=0; i<12; i++) checkSum += ((rn.substr(i,1)>>0)*((i%8)+2));
+		var rrnMatch = ((11-(checkSum%11))%10) == rn.substr(12, 1);
+		var frnMatch = (((11-(checkSum%11))%10+2)%10) == rn.substr(12, 1);
+		if( type === 'rrn' ) {
+			return rrnMatch;
+		}
+		else if( type === 'frn' ) {
+			return frnMatch;
+		}
+		return rrnMatch || frnMatch;
 	};
 	
 	function polyfill() {
