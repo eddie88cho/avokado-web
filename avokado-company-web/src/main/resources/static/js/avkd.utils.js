@@ -109,7 +109,7 @@
 				} else return false;
 			}
 			phoneNo = phoneNo.split("-").join('');
-			var regPhone = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+			var regPhone = /(^(01[1|6|7|8|9])[1-9][0-9]{6,7})$|^(010[1-9][0-9]{7})$/;
 			return regPhone.test(phoneNo);
 		};
 		/**
@@ -118,10 +118,9 @@
 		 */
 		_utils.isValid.telNo = function( tel ) {
 			if( isBlank(tel) ) return false;
-			var valid = false;
-			// TODO hyphen 제거
-			// TODO 정규식 체크
-			return valid;
+			tel = tel.trim().split("-").join('');
+			var regTel = /^((^0[0-9]{2})[0-9]{7,8}$)|(^02[0-9]{7,8}$)/;
+			return regTel.test(tel);
 		}
 		/**
 		 * 연,월,일 유효성 검사
@@ -265,16 +264,12 @@
 			if( !validRegistrationNumber(rn) ) throw '올바른 주민(외국인)등록번호가 아닙니다.';
 			var _p = pattern>>0, _uh=(typeof useHyphen != 'boolean')?true:useHyphen, rn = rn.split("-").join('');
 			var rnArr = [];
-			// TODO 주민(외국인)등록번호 마스킹 
+			// 주민(외국인)등록번호 마스킹 
 			rnArr[0] = rn.substr(0,6);
 			switch( _p ) {
-			case 1:
-				rnArr[1] = '*'.repeat(7);
-				break;
-			case 0: default:
-				rnArr[1] = rn.substr(6,1).padEnd(6,'*');
+			case 1: rnArr[1] = '*'.repeat(7); break;
+			case 0: default: rnArr[1] = rn.substr(6,1).padEnd(6,'*');
 			}
-			
 			return rnArr.join(_uh?'-':'');
 		};
 		
