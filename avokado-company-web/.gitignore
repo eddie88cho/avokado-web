@@ -8,6 +8,7 @@
 .factorypath
 .project
 .settings
+.bin
 .springBeans
 .sts4-cache
 
