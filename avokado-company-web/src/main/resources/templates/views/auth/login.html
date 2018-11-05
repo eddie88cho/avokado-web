@@ -9,7 +9,7 @@
 			<div class='p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40'>
 				<h1 class="txt-c-avkd-darker font-w-b">Avokado Groupware</h1>
 				<p class="p-t-15 txt-c-avkd-dark">회사 이메일 계정으로 그룹웨어 로그인</p>
-				<form class="p-t-25" role="form" novalidate="novalidate">
+				<form id="loginForm" class="p-t-25" role="form" novalidate="novalidate">
 					<div class="form-group form-group-default">
 						<label>Login</label>
 						<div class="controls">
@@ -30,7 +30,7 @@
 							</div>
 						</div>
 					</div>
-					<button class="btn btn-primary btn-cons m-t-10" type="submit">로그인</button>
+					<button class="btn btn-primary btn-cons m-t-10" onclick="requestLogin();return false;">로그인</button>
 				</form>
 				<div class="pull-bottom sm-pull-bottom">
 					<div class="m-b-30 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
@@ -46,6 +46,16 @@
 	<th:block th:replace="/fragments/head :: scripts"></th:block>
 	<script type="text/javascript" th:inline="javascript" >
 		console.log("login page - userOS : " , ( /*[[${userOSName}]]*/ 'anonymous' ));
+		
+		function requestLogin() {
+			var loginSuccess = confirm("[DEV] TEST LOGIN.");
+			if( loginSuccess ) {
+				location.href = '/';
+			} else {
+				return alert("[TODO] Login Fail Message.");
+			}
+		}
+		
 	</script>
 </body>
 </html>
