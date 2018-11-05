@@ -374,14 +374,13 @@ body.rtl .checkbox label::after {
   form .row [class*='col-']:last-child {padding-right: 0;}
 }
 
-
 /* Background */
 .bg-white { background-color:#fff;}
 
 /* Login Page
 --------------------------------------------------
 */
-.login-wrapper {height:100%;background-color:#6d5cae;}
+.login-wrapper {background-color:#56862b;height:100%;}
 .login-wrapper > * {height: 100%;}
 .login-wrapper .bg-img {position: absolute;width: 100%;overflow: hidden;}
 .login-wrapper .bg-img > img {height: 100%;opacity: 0.6;}
