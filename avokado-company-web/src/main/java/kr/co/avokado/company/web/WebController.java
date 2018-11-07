@@ -22,4 +22,9 @@ public class WebController extends AvkdControllerComponent {
 	public String indexPage() {
 		return "/views/index";
 	}
+	
+	@GetMapping("/mail")
+	public String mailPage() {
+		return "/views/mail/list";
+	}
 }

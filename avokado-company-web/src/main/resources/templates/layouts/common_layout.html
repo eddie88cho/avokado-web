@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="/fragments/head :: head"><meta charset="utf-8"/></head>
+<!--/* AVOKADO GROUPWARE COMMON LAYOUT */-->
 <body>
-	<div id="wrap">
-		<!--/*<header th:replace="/fragments/header :: header"></header>*/-->
-
-		<!-- content -->
-		<div id="content" layout:fragment="content"></div>
-		<!-- //content -->
+	<!-- START SIDEBAR -->
+	<nav th:replace="/fragments/nav :: nav"></nav>
+	<!-- END SIDEBAR -->
+	<!-- START CONTAINER -->
+	<div class="avkd-container">
+		<!-- START HEADER -->
+		<div th:replace="/fragments/header :: header"></div>
+		<!-- END HEADER -->
+	
+		<!-- START CONTENT -->
+		<div class="avkd-content-wrap">
+			<div layout:fragment="content"></div>
+		</div>
+		<!-- END CONTENT -->
 	</div>
+	<!-- END CONTAINER -->
+	<th:block th:replace="/fragments/head :: scripts"></th:block>
 	<script layout:fragment="content-js"></script>
 </body>
 </html>

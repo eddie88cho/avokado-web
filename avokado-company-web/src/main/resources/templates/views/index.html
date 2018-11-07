@@ -2,15 +2,28 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="/layouts/common_layout">
 <head><meta charset="utf-8"/></head>
 <body>
-	<div id="wrap">
-		<!-- content --> 
-		<div id="content" layout:fragment="content">
-			hello world
+	<!-- START CONTENTS --> 
+	<div layout:fragment="content" class="avkd-content">
+		<div class="container-fluid padding-25">
+			<div class="row">
+				<!-- WHEATHER -->
+				<div class="col-md-12 col-lg-8 col-xlg-6 md-m-t-10">
+					<div class="card no-border no-margin">
+						<div class="card-header">
+							<div class="card-title">
+								<i class="fas fa-map-marker-alt"></i>
+								<span>서울, 마포구 상암동</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- // WHEATHER -->
+			</div>
 		</div>
-		<!-- //content -->
 	</div>
+	<!-- END CONTENTS -->
 </body>
 <script type="text/javascript" layout:fragment="content-js">
-console.log("hello world");
+console.log("Home");
 </script>
 </html>

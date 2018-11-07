@@ -34,6 +34,25 @@
 			$(this).closest('.form-group').find('label').removeClass('fade');
 		}
 	});
+	/*
+	 * Sidebar
+	 * ------------------------------------------------------------------------------
+	 */
+	$('.nav-bar').parent().on('click', function(){
+		$('.avkd-sidebar').toggleClass('show');
+		$('body').toggleClass('sidebar-open');
+	});
+	$(window).resize(function() {
+		$('.avkd-sidebar').removeClass('show');
+		$('body').removeClass('sidebar-open');
+	});
+	$('.avkd-sidebar').on('mouseenter', function() {
+		$(this).addClass('sidebar-focus');
+	});
+	$('.avkd-sidebar').on('mouseleave', function() {
+		$(this).removeClass('sidebar-focus');
+	});
+	
 	
 	Avkd.prototype.setUserOS = function() {
 		var OSName = "";

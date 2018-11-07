@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head><meta charset="UTF-8"/></head>
+<!-- SIDEBAR -->
+<nav class="avkd-sidebar" th:fragment="nav" th:inline="text">
+	<!-- SIDEBAR HEADER -->
+	<div class="sidebar-header">
+		<h3 class="txt-c-avkd-yellow font-w-b">AVKD</h3>
+	</div>
+	<!-- // SIDEBAR HEADER -->
+	<!-- MENUS -->
+	<div class="sidebar-menu">
+		<div class="menu-items">
+			<ul class="menu-items">
+				<li class="m-t-30" th:classappend="${#httpServletRequest.requestURI == '/'} ? 'current' : ''">
+					<a th:href="@{/}" class="detailed">
+						<span class="title">홈</span>
+						<span class="details">12 New Updates</span>
+					</a>
+					<span class="menu-icon" th:onclick="'location.href = \''+@{/}+'\''">
+						<i class="fas fa-home"></i>
+					</span>
+				</li>
+				<li class="m-t-15" th:classappend="${#httpServletRequest.requestURI == '/mail'} ? 'current' : ''">
+					<a th:href="@{/mail}" class="detailed">
+						<span class="title">메일</span>
+					</a>
+					<span class="menu-icon" th:onclick="'location.href = \''+@{/mail}+'\''">
+						<i class="fas fa-envelope"></i>
+					</span>
+				</li>
+				<li class="m-t-15">
+					<a href="index.html" class="detailed">
+						<span class="title">달력</span>
+					</a>
+					<span class="menu-icon"><i class="fas fa-calendar-alt"></i></span>
+				</li>
+				<li class="m-t-15">
+					<a href="index.html" class="detailed">
+						<span class="title">공지사항</span>
+					</a>
+					<span class="menu-icon"><i class="fas fa-bullhorn"></i></span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- // MENUS -->
+</nav>
+<!-- // SIDEBAR -->
+</html>
