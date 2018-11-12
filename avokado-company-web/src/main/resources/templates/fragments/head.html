@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:fragment="head" th:inline="text">
-	<meta charset="UTF-8"/>
+	<meta charset="utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta http-equiv="content-type" content="text/html;charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 	
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-touch-fullscreen" content="yes">
@@ -13,22 +12,20 @@
 	<meta name="author" content="Avokado">
 	<meta name="description" content="Avokado 그룹웨어">
 	
-	<title>AVOKADO | Groupware</title>
-	
-	<link href="/css/bootstrap.min.css" rel='stylesheet' type='text/css'>
-	<link th:href="@{/css/all.min.css}" rel='stylesheet' type='text/css'>
-	<link th:href="@{/css/avkd.pace.css}" rel='stylesheet' type='text/css'>
-	<link href="/css/avkd.common.css" rel='stylesheet' type='text/css'>
+	<title>Avokado | Groupware</title>
+	<!-- Bootstrap core CSS-->
+	<link th:href="@{/css/bootstrap.min.css}" rel='stylesheet' type='text/css'>
+	<!-- animate CSS-->
+	<link th:href="@{/css/animate.css}" rel='stylesheet' type='text/css'>
+	<!-- Icons CSS-->
+	<link th:href="@{/css/icons.css}" rel='stylesheet' type='text/css'>
+	<!-- Custom Style-->
+	<link th:href="@{/css/app-style.css}" rel='stylesheet' type='text/css'>
 </head>
 <th:block th:fragment="scripts" th:inline="text">
-
-	<!--[if lte IE 9]>
-		<script th:src="@{/js/html5shiv.min.js}"></script>
-	<![endif]-->
-	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/popper.min.js}"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/all.min.js}"></script>
-	<script th:src="@{/js/pace.min.js}"></script>
 	<script th:src="@{/js/avkd.common.js}"></script>
 	<script th:src="@{/js/avkd.utils.js}"></script>
 </th:block>

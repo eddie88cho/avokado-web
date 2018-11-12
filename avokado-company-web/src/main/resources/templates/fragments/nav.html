@@ -12,20 +12,18 @@
 	<div class="sidebar-menu">
 		<div class="menu-items">
 			<ul class="menu-items">
-				<li class="m-t-30" th:classappend="${#httpServletRequest.requestURI == '/'} ? 'current' : ''">
-					<a th:href="@{/}" class="detailed">
+				<li class="m-t-30" th:classappend="${#httpServletRequest.requestURI == '/'} ? 'current' : ''" th:onclick="'location.href = \''+@{/}+'\''">
+					<a href="javascript:;" class="detailed">
 						<span class="title">홈</span>
-						<span class="details">12 New Updates</span>
+						<span class="details"><span>12</span> New Updates</span>
 					</a>
-					<span class="menu-icon" th:onclick="'location.href = \''+@{/}+'\''">
+					<span class="menu-icon">
 						<i class="fas fa-home"></i>
 					</span>
 				</li>
-				<li class="m-t-15" th:classappend="${#httpServletRequest.requestURI == '/mail'} ? 'current' : ''">
-					<a th:href="@{/mail}" class="detailed">
-						<span class="title">메일</span>
-					</a>
-					<span class="menu-icon" th:onclick="'location.href = \''+@{/mail}+'\''">
+				<li class="m-t-15" th:classappend="${#httpServletRequest.requestURI == '/mail'} ? 'current' : ''" th:onclick="'location.href = \''+@{/mail}+'\''">
+					<a href='javascript:;' class="detailed"><span class="title">메일</span></a>
+					<span class="menu-icon">
 						<i class="fas fa-envelope"></i>
 					</span>
 				</li>

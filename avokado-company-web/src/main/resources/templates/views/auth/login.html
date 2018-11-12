@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="/fragments/head :: head"><meta charset="utf-8"></head>
-<body>
-	<div id="wrap" class="login-wrapper">
-		<div class="bg-img"><img th:src="@{/img/bg_avocado_hd.jpg}"></div>
-		<!-- content --> 
-		<div id="content" class="login-contents bg-white">
-			<div class='p-l-50 m-l-20 p-r-50 m-r-20 p-t-50 m-t-30 sm-p-l-15 sm-p-r-15 sm-p-t-40'>
-				<h1 class="txt-c-avkd-darker font-w-b">Avokado Groupware</h1>
-				<p class="p-t-15 txt-c-avkd-dark">회사 이메일 계정으로 그룹웨어 로그인</p>
-				<form id="loginForm" class="p-t-25" role="form" novalidate="novalidate">
-					<div class="form-group form-group-default">
-						<label>Login</label>
-						<div class="controls">
-							<input type="text" name="username" placeholder="Email Adress" class="form-control" required>
-						</div>
+<body class="bg-dark">
+	<!-- Start wrapper-->
+	<div id="wrapper" class="login-wrapper">
+		<div class="card card-authentication1 mx-auto my-5">
+			<div class="card-body">
+				<div class="card-content p-2">
+					<div class="text-center">
+						<img th:src="@{/img/logo-icon.png}" alt="logo icon">
 					</div>
-					<div class="form-group form-group-default">
-						<label>Password</label>
-						<div class="controls">
-							<input type="password" name="password" placeholder="Email Password" class="form-control" required>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 no-padding sm-p-l-10">
-							<div class="checkbox ">
-								<input type="checkbox" value="1" id="chkSaveId">
-								<label for="chkSaveId">아이디 저장</label>
+					<div class="card-title text-uppercase text-center py-3">로그인</div>
+					<form>
+						<div class="form-group">
+							<label for="exampleInputUsername" class="">아이디</label>
+							<div class="position-relative has-icon-right">
+								<input type="text" id="exampleInputUsername" class="form-control input-shadow lower-case" placeholder="your-id@avokado.co.kr" maxlength="150">
+								<div class="form-control-position">
+									<i class="icon-user"></i>
+								</div>
 							</div>
 						</div>
-					</div>
-					<button class="btn btn-primary btn-cons m-t-10" onclick="requestLogin();return false;">로그인</button>
-				</form>
-				<div class="pull-bottom sm-pull-bottom">
-					<div class="m-b-30 sm-m-t-20 sm-p-r-15 sm-p-b-20 clearfix">
-						<div class="no-padding m-t-10">
-							<p><small>사용자 계정 생성은 <a href="mailto:burner@avokado.co.kr">계정관리자</a>에게 문의 바랍니다.</small></p>
+						<div class="form-group">
+							<label for="exampleInputPassword" class="">비밀번호</label>
+							<div class="position-relative has-icon-right">
+								<input type="password" id="exampleInputPassword" class="form-control input-shadow" placeholder="비밀번호를 입력해주세요" maxlength="255">
+								<div class="form-control-position">
+									<i class="icon-lock"></i>
+								</div>
+							</div>
 						</div>
-					</div>
+						<div class="form-row">
+							<div class="form-group col-6">
+								<div class="icheck-material-primary">
+									<input type="checkbox" id="user-checkbox"/>
+									<label for="user-checkbox">아이디 저장</label>
+								</div>
+							</div>
+							<div class="form-group col-6 text-right">
+								<a href="authentication-reset-password.html">비밀번호 찾기</a>
+							</div>
+						</div>
+						<button id='bth-login' type="button" class="btn btn-primary btn-block waves-effect waves-light">로그인</button>
+					</form>
 				</div>
 			</div>
+<!--/*
+			<div class="card-footer text-center py-3">
+				<p class="text-muted mb-0">Do not have an account? <a href="authentication-signup.html"> Sign Up here</a></p>
+			</div>
+*/-->
 		</div>
-		<!-- //content -->
-	</div>
-	<th:block th:replace="/fragments/head :: scripts"></th:block>
-	<script type="text/javascript" th:inline="javascript" >
-		console.log("login page - userOS : " , ( /*[[${userOSName}]]*/ 'anonymous' ));
-		
-		function requestLogin() {
-			var loginSuccess = confirm("[DEV] TEST LOGIN.");
-			if( loginSuccess ) {
-				location.href = '/';
-			} else {
-				return alert("[TODO] Login Fail Message.");
-			}
-		}
-		
+		<!--Start Back To Top Button-->
+		<a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+		<!--End Back To Top Button-->
+	</div><!--wrapper-->
+	<script th:replace="/fragments/head :: scripts" type="text/javascript"></script>
+	<!-- Login Page Script -->
+	<script type="text/javascript">
+	'use strict';
 	</script>
+	<!-- // Login Page Script -->
 </body>
 </html>
